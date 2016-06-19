@@ -1,7 +1,7 @@
 module FileDb
   module Data
     def initialize params= {}
-      load_params_into_model parms
+      load_params_into_model params
     end
 
 
@@ -29,7 +29,7 @@ module FileDb
 
 
     def persisted?
-      !id.nil?
+      id
     end
   end  
 end
