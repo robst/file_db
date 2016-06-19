@@ -1,4 +1,4 @@
-module FileDB
+module FileDb
   module Database
     def self.database_check!
       create_data_directory! unless exist_data_directory?

@@ -2,6 +2,7 @@ module FileDb
   module Configuration
     def self.configure options = {}
       @configuration = default_options.merge(options)
+      FileDb::Database.database_check!
     end
 
     def self.configured option
