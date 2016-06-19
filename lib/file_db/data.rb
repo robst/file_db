@@ -25,7 +25,6 @@ module FileDb
         self.id = Time.now.to_i
         self.class.append_to_database self
       end
-      self
     end
 
 
