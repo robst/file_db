@@ -1,11 +1,20 @@
 module FileDb
   module Data
     def initialize params= {}
+      load_params_into_model parms
+    end
+
+
+    def load_params_into_model params
       params.each do |key, value|
         next unless self.class.columns.include?(key)
         send("#{key}=", value)
-
       end 
+    end
+
+    def create params
+      load_params_into_model params
+      save
     end
     
     def save
