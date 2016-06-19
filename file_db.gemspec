@@ -6,21 +6,13 @@ require 'file_db/version'
 Gem::Specification.new do |spec|
   spec.name          = "file_db"
   spec.version       = FileDb::VERSION
-  spec.authors       = ["robst"]
+  spec.authors       = ["Robert Starke"]
   spec.email         = ["robertst81@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Use CSV Files like a Database with ActiveRecord Feeling.}
+  spec.description   = %q{You need to store informationen in a CSV File, because there is no need for a database? You can use FileDb to store all informationen in a CSV File and search in it like ActiveRecord (User.find(1212). See detailed Information at the github Page.}
+  spec.homepage      = "https://github.com/robst/file_db"
   spec.license       = "MIT"
-
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
-  else
-    raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
-  end
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir        = "exe"
