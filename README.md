@@ -7,7 +7,7 @@ You need to store data into a small type of database, like CSV and want a better
 hm, yeah. just add this to your Gemfile:
 
 ```ruby
-gem 'file_db', '~> 0.1.0'
+gem 'file_db', '~> 0.2.0'
 ```
 
 And then execute:
@@ -62,6 +62,13 @@ now the `User` is stored under `data/user.csv`. You should find an entry like th
 
 ```
 1466311874,rob,
+```
+
+You can also use `create` to create it directly without calling save:
+
+
+```ruby
+my_user = User.create name: 'rob'
 ```
 
 Let's get them user back:
