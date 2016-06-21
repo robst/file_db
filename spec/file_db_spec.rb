@@ -6,11 +6,6 @@ describe FileDb do
   end
 
   describe 'classes acting as FileDb::Model' do
-    before do
-      class User < FileDb::Model
-        columns :name, :test
-      end
-    end
      
     let(:user) { User.new name: 'Tester' }
     it 'should have accessors' do
