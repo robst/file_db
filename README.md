@@ -7,7 +7,7 @@ You need to store data into a small type of database, like CSV and want a better
 hm, yeah. just add this to your Gemfile:
 
 ```ruby
-gem 'file_db', '~> 0.2.0'
+gem 'file_db', '~> 0.3.0'
 ```
 
 And then execute:
@@ -103,6 +103,17 @@ user.save
 User.find(1466311874)
 -> #<User:0x00000004651798 @name="bob", @id="1466311874", @email=test@example.com>
 ```
+
+delete a record:
+
+```ruby
+user = User.find(1466311874)
+-> #<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>
+user.delete
+User.find(1466311874)
+-> nil 
+```
+
 
 You want to use another table than `user`? So just configure it:
 
