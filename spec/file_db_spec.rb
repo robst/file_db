@@ -24,8 +24,20 @@ describe FileDb do
     end
 
     describe '#where' do
-      context 'no user found' do
-#        it { expect(User.where(name: 'not existing')).to eq([]) }
+      context 'when no user found' do
+        it { expect(User.where(name: 'not existing')).to eq([]) }
+      end
+      context 'when a valid user found, name of first user' do
+        it { expect(User.where(name: 'max').first.name).to eq('max') }
+      end
+    end
+
+    describe '#find' do
+      context 'when no user found' do
+        it { expect(User.find(1)).to eq(nil) }
+      end
+      context 'when a valid user found, name' do
+        it { expect(User.find(1386757680).name).to eq('max') }
       end
     end
   end
