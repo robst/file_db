@@ -1,4 +1,5 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'timecop'
 require 'file_db'
 
 RSpec.configure do |config|
@@ -8,10 +9,13 @@ RSpec.configure do |config|
     end
     FileDb::Configuration.configure data_directory: 'data'
     FileDb::Database.database_check!
+    time = Time.local(2013, 12, 11, 11, 28, 0)
+    Timecop.freeze time
     User.create name: 'max', test: 'test'
   end
 
   config.after(:suite) do
+    Timecop.return
     File.delete File.join(
       FileDb::Configuration.configured(:data_directory),
       "#{User.table_name}.csv"
