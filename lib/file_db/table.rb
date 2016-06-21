@@ -15,10 +15,27 @@ module FileDb
       end
     end
 
+    def rebuild_file! entries
+      ::CSV.open(table_file_location, "w") do |csv|
+        entries.each do |entry|
+          csv << entry
+        end
+      end
+    end
+
     def append_to_database entry_object
       ::CSV.open(table_file_location, "a") do |csv|
         csv << entry_object.to_csv
       end
+    end
+
+    def delete_entry entry
+      records = []
+      ::CSV.foreach(table_file_location) do |row|
+        next if row[0]==entry.id.to_s
+        records << row
+      end
+      rebuild_file! records
     end
 
     def update_database entry_object
@@ -30,12 +47,7 @@ module FileDb
           records << row
         end
       end
-
-      ::CSV.open(table_file_location, "w") do |csv|
-        records.each do |record|
-          csv << record
-        end
-      end
+      rebuild_file! records
     end
 
     def table_file_location

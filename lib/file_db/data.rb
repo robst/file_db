@@ -12,6 +12,10 @@ module FileDb
       end 
     end
 
+    def delete 
+      self.class.delete_entry self
+    end
+    
     def create params
       load_params_into_model params
       save
