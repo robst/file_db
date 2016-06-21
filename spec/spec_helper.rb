@@ -12,6 +12,10 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
+    File.delete File.join(
+      FileDb::Configuration.configured(:data_directory),
+      "#{User.table_name}.csv"
+    )
     Dir.delete(FileDb::Configuration.configured :data_directory)
   end
 end

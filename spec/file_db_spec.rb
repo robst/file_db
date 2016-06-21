@@ -22,8 +22,11 @@ describe FileDb do
     it 'set params hash to accessors' do
       expect(user.name).to eq('Tester')
     end
-  end
-  it 'does something useful' do
-    expect(false).to eq(true)
+
+    describe '#where' do
+      context 'no user found' do
+#        it { expect(User.where(name: 'not existing')).to eq([]) }
+      end
+    end
   end
 end
