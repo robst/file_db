@@ -16,12 +16,6 @@ module FileDb
       self.class.delete_entry self
     end
     
-    def create params
-      load_params_into_model params
-      save
-      self
-    end
-    
     def save
       if persisted?
         self.class.update_database self

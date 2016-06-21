@@ -8,6 +8,12 @@ module FileDb
       @table_name = name
     end
 
+    def create params
+      object = new params
+      object.save
+      object
+    end
+
     def searching_database
       return unless File.exist?(table_file_location)
       ::CSV.foreach(table_file_location) do |row| 
