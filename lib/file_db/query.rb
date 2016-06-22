@@ -2,6 +2,18 @@ module FileDb
   module Query
     include FileDb::Columns
     include FileDb::Table
+    def first
+      all.first
+    end
+
+    def last
+      all.last
+    end
+
+    def all
+      where({})
+    end
+
 
     def find id
       where(id: id).first
