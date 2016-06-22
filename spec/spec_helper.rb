@@ -10,8 +10,9 @@ RSpec.configure do |config|
     FileDb::Configuration.configure data_directory: 'data'
     FileDb::Database.database_check!
     time = Time.local(2013, 12, 11, 11, 28, 0)
-    Timecop.freeze time
+    Timecop.travel time
     User.create name: 'max', test: 'test'
+    User.create name: 'tester', test: 'tests'
   end
 
   config.after(:suite) do
