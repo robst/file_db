@@ -7,7 +7,7 @@ You need to store data into a small type of database, like CSV and want a better
 hm, yeah. just add this to your Gemfile:
 
 ```ruby
-gem 'file_db', '~> 0.3.0'
+gem 'file_db', '~> 0.4.0'
 ```
 
 And then execute:
@@ -89,6 +89,24 @@ Let's find all users named with rob. I think you know how get this to work:
 
 ```ruby
 User.where(name: 'rob')
+-> [#<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>]
+```
+
+You can also use `first` and `last` to get the first and last user
+```ruby
+User.first
+-> #<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>
+```
+
+```ruby
+User.last
+-> #<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>
+```
+
+Or you use `all` to get really all users.
+
+```ruby
+User.all
 -> [#<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>]
 ```
 
