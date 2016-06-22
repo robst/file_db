@@ -23,6 +23,12 @@ describe FileDb do
       expect(user.name).to eq('Tester')
     end
 
+    describe 'collection' do
+      it { expect(User.all.map(&:name).join(',')).to eq('max,tester') }
+      it { expect(User.last.name).to eq('tester') }
+      it { expect(User.first.name).to eq('max') }
+    end
+
     describe '#where' do
       context 'when no user found' do
         it { expect(User.where(name: 'not existing')).to eq([]) }
