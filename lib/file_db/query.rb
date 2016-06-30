@@ -14,7 +14,6 @@ module FileDb
       where({})
     end
 
-
     def find id
       where(id: id).first
     end
@@ -29,6 +28,8 @@ module FileDb
       results
     end
 
+private
+
     def create_object values
       hash = {}
       columns.each do |column|
@@ -41,7 +42,7 @@ module FileDb
       conditions.each do |key, value|
         return false unless data[column_index(key)].eql?(value.to_s)
       end
-     true 
+     true
     end
 
   end
