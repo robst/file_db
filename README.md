@@ -92,6 +92,13 @@ User.where(name: 'rob')
 -> [#<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>]
 ```
 
+It's also fine to search with more than one parameter.
+
+```ruby
+User.where(name: 'rob', email: nil)
+-> [#<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>]
+```
+
 You can also use `first` and `last` to get the first and last user
 ```ruby
 User.first
@@ -129,7 +136,7 @@ user = User.find(1466311874)
 -> #<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>
 user.delete
 User.find(1466311874)
--> nil 
+-> nil
 ```
 
 
@@ -167,13 +174,3 @@ THE SOFTWARE.
 ## Questions?
 
 If you have further questions, code smells, hints or a beer, just contact me :)
-
-
-
-
-
-
-
-
-
-
