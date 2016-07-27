@@ -20,7 +20,7 @@ module FileDb
 
     def where conditions
       results = []
-      searching_database do |data_row|
+      Database.instance.search(self) do |data_row|
         if conditions_match?(conditions,data_row)
           results << create_object(data_row)
         end

@@ -7,6 +7,13 @@ module FileDb
       instance.create_data_directory! unless instance.exist_data_directory?
     end
 
+    def search model
+      return unless File.exist?(table_file(model))
+      ::CSV.foreach(table_file(model)) do |row|
+        yield row
+      end
+    end
+
     def exist_data_directory?
       File.exist? data_directory
     end
@@ -16,6 +23,10 @@ module FileDb
     end
 
     private
+
+    def table_file model
+      File.join(data_directory, "#{model.table_name}.csv")
+    end
 
     def data_directory
       Configuration.configured(:data_directory)

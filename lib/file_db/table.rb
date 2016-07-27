@@ -14,13 +14,6 @@ module FileDb
       object
     end
 
-    def searching_database
-      return unless File.exist?(table_file_location)
-      ::CSV.foreach(table_file_location) do |row| 
-        yield row 
-      end
-    end
-
     def rebuild_file! entries
       ::CSV.open(table_file_location, "w") do |csv|
         entries.each do |entry|
