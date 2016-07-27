@@ -14,6 +14,12 @@ module FileDb
       end
     end
 
+    def add_record record
+      ::CSV.open(table_file(record.class), "a") do |csv|
+        csv << record.to_csv
+      end
+    end
+
     def exist_data_directory?
       File.exist? data_directory
     end

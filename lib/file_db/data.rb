@@ -4,7 +4,7 @@ module FileDb
       load_params_into_model params
     end
 
-    def delete 
+    def delete
       self.class.delete_entry self
     end
 
@@ -13,7 +13,7 @@ module FileDb
         self.class.update_database self
       else
         self.id = Time.now.to_i
-        self.class.append_to_database self
+        Database.instance.add_record self
       end
     end
 

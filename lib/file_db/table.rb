@@ -22,12 +22,6 @@ module FileDb
       end
     end
 
-    def append_to_database entry_object
-      ::CSV.open(table_file_location, "a") do |csv|
-        csv << entry_object.to_csv
-      end
-    end
-
     def delete_entry entry
       records = []
       ::CSV.foreach(table_file_location) do |row|
