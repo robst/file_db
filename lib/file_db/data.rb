@@ -5,12 +5,12 @@ module FileDb
     end
 
     def delete
-      self.class.delete_entry self
+      Database.instance.delete_record self
     end
 
     def save
       if persisted?
-        self.class.update_database self
+        Database.instance.update_record self
       else
         self.id = Time.now.to_i
         Database.instance.add_record self
