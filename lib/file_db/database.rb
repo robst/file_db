@@ -18,7 +18,7 @@ module FileDb
       records = []
       ::CSV.foreach(table_file(record.class)) do |row|
         next if row[0]==record.id.to_s
-        records << row
+        records << build_object(record.class, row)
       end
       rebuild_table! record.class, records
     end
@@ -27,17 +27,17 @@ module FileDb
       records = []
       ::CSV.foreach(table_file(record.class)) do |row|
         if row[0]==record.id.to_s
-          records << record.to_csv
+          records << record
         else
-          records << row
+          records << build_object(record.class, row)
         end
       end
       rebuild_table! record.class, records
     end
 
     def add_record record
-      ::CSV.open(table_file(record.class), "a") do |csv|
-        csv << record.to_csv
+      write_to_table record.class, :a do
+        record
       end
     end
 
@@ -51,11 +51,25 @@ module FileDb
 
     private
 
-    def rebuild_table! clazz, records
-      ::CSV.open(table_file(clazz), "w") do |csv|
-        records.each do |entry|
-          csv << entry
+    def build_object clazz, data
+      hash = {}
+      clazz.columns.each do |column|
+        hash[column] = data[clazz.column_index(column)]
+      end
+      clazz.new hash
+    end
+
+    def write_to_table clazz, mode = 'w'
+      ::CSV.open(table_file(clazz), mode.to_s) do |csv|
+        [yield].flatten.each do |record|
+          csv << record.to_csv
         end
+      end
+    end
+
+    def rebuild_table! clazz, records
+      write_to_table clazz do
+        records
       end
     end
 
