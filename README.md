@@ -7,7 +7,7 @@ You need to store data into a small type of database, like CSV and want a better
 hm, yeah. just add this to your Gemfile:
 
 ```ruby
-gem 'file_db', '~> 0.4.0'
+gem 'file_db', '~> 0.5.0'
 ```
 
 And then execute:
@@ -30,13 +30,14 @@ First configure the storage directory:
 ```ruby
 FileDb::Configuration.configure data_directory: 'data'
 ```
+Subdirectory is the default for storing the tables. If you change the configuration, the `database_check!` will be automaticly executed
 
-Make sure, the directory exists or use the build in check for checking and creating the data directory:
+If you running a clean instance with no configuration changes so make sure, the storage directory exists or use the build in check for checking and creating the data directory:
 ```ruby
 FileDb::Database.database_check!
 ```
 
-ok, lets go to create a model.
+Let's start with creating a model called `User`.
 
 ```ruby
 class User < FileDb::Model
@@ -44,7 +45,7 @@ class User < FileDb::Model
 end
 ```
 
-thats it. now we got a user model which actually just storing an id. lets add `columns` for this.
+Now we got a user model which actually just storing an id. lets add some `columns` for this.
 
 ```ruby
 class User < FileDb::Model
@@ -61,7 +62,7 @@ my_user.save
 now the `User` is stored under `data/user.csv`. You should find an entry like this one:
 
 ```
-1466311874,rob,
+1,rob,
 ```
 
 You can also use `create` to create it directly without calling save:
@@ -73,14 +74,14 @@ my_user = User.create name: 'rob'
 
 Let's get them user back:
 ```ruby
-User.find 1466311874
--> #<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>
+User.find 1
+-> #<User:0x00000004651798 @name="rob", @id="1", @email=nil>
 ```
 
 you can access all attributes like `attr_accessor`
 
 ```ruby
-User.find(1466311874).name
+User.find(1).name
 -> rob
 ```
 
@@ -89,53 +90,53 @@ Let's find all users named with rob. I think you know how get this to work:
 
 ```ruby
 User.where(name: 'rob')
--> [#<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>]
+-> [#<User:0x00000004651798 @name="rob", @id="1", @email=nil>]
 ```
 
 It's also fine to search with more than one parameter.
 
 ```ruby
 User.where(name: 'rob', email: nil)
--> [#<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>]
+-> [#<User:0x00000004651798 @name="rob", @id="1", @email=nil>]
 ```
 
 You can also use `first` and `last` to get the first and last user
 ```ruby
 User.first
--> #<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>
+-> #<User:0x00000004651798 @name="rob", @id="1", @email=nil>
 ```
 
 ```ruby
 User.last
--> #<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>
+-> #<User:0x00000004651798 @name="rob", @id="1", @email=nil>
 ```
 
 Or you use `all` to get really all users.
 
 ```ruby
 User.all
--> [#<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>]
+-> [#<User:0x00000004651798 @name="rob", @id="1", @email=nil>]
 ```
 
 rename the user:
 
 ```ruby
-user = User.find(1466311874)
--> #<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>
+user = User.find(1)
+-> #<User:0x00000004651798 @name="rob", @id="1", @email=nil>
 user.name = 'bob'
 user.email = 'test@example.com'
 user.save
-User.find(1466311874)
--> #<User:0x00000004651798 @name="bob", @id="1466311874", @email=test@example.com>
+User.find(1)
+-> #<User:0x00000004651798 @name="bob", @id="1", @email=test@example.com>
 ```
 
 delete a record:
 
 ```ruby
-user = User.find(1466311874)
--> #<User:0x00000004651798 @name="rob", @id="1466311874", @email=nil>
+user = User.find(1)
+-> #<User:0x00000004651798 @name="rob", @id="1", @email=nil>
 user.delete
-User.find(1466311874)
+User.find(1)
 -> nil
 ```
 
