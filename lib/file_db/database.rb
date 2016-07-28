@@ -9,23 +9,24 @@ module FileDb
 
     def search model
       return unless File.exist?(table_file(model))
-      ::CSV.foreach(table_file(model)) do |row|
+      read_from_table model do |row|
         yield row
       end
     end
 
     def delete_record record
       records = []
-      ::CSV.foreach(table_file(record.class)) do |row|
+      read_from_table record.class do |row|
         next if row[0]==record.id.to_s
         records << build_object(record.class, row)
       end
+
       rebuild_table! record.class, records
     end
 
     def update_record record
       records = []
-      ::CSV.foreach(table_file(record.class)) do |row|
+      read_from_table record.class do |row|
         if row[0]==record.id.to_s
           records << record
         else
@@ -57,6 +58,12 @@ module FileDb
         hash[column] = data[clazz.column_index(column)]
       end
       clazz.new hash
+    end
+
+    def read_from_table clazz
+      ::CSV.foreach(table_file(clazz)) do |row|
+        yield(row)
+      end
     end
 
     def write_to_table clazz, mode = 'w'
