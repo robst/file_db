@@ -31,13 +31,7 @@ describe FileDb do
 
     describe 'delete' do
       before do
-        time = Time.local(2013, 12, 11, 11, 28, 30)
-        Timecop.travel time
         User.create name: 'JustDeleteMe'
-      end
-
-      after do
-        Timecop.return
       end
 
       it 'should have an user with name JustDeleteMe and could be deleted' do
@@ -58,10 +52,10 @@ describe FileDb do
 
     describe '#find' do
       context 'when no user found' do
-        it { expect(User.find(1)).to eq(nil) }
+        it { expect(User.find(0)).to eq(nil) }
       end
       context 'when a valid user found, name' do
-        it { expect(User.find(1386757680).name).to eq('max') }
+        it { expect(User.find(1).name).to eq('max') }
       end
     end
   end
