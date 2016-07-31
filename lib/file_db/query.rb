@@ -15,7 +15,11 @@ module FileDb
     end
 
     def find id
-      where(id: id).first
+      find_by(:id, id)
+    end
+
+    def find_by attribute, search_value
+      where("#{attribute}".to_sym => search_value).first
     end
 
     def where conditions
