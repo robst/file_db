@@ -58,5 +58,14 @@ describe FileDb do
         it { expect(User.find(1).name).to eq('max') }
       end
     end
+
+    describe '#find_by' do
+      context 'when no user found' do
+        it { expect(User.find_by(:id, 0)).to eq(nil) }
+      end
+      context 'when a valid user found, name' do
+        it { expect(User.find_by(:id, 1).name).to eq('max') }
+      end
+    end
   end
 end
