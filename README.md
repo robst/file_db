@@ -7,7 +7,7 @@ You need to store data into a small type of database, like CSV and want a better
 hm, yeah. just add this to your Gemfile:
 
 ```ruby
-gem 'file_db', '~> 0.5.0'
+gem 'file_db', '~> 0.6.0'
 ```
 
 And then execute:
@@ -99,6 +99,21 @@ It's also fine to search with more than one parameter.
 User.where(name: 'rob', email: nil)
 -> [#<User:0x00000004651798 @name="rob", @id="1", @email=nil>]
 ```
+
+For the first User with name rob you can use:
+
+```ruby
+User.where(name: 'rob', email: nil).first
+-> #<User:0x00000004651798 @name="rob", @id="1", @email=nil>
+```
+
+or
+
+```ruby
+User.find_by(:name, 'rob')
+-> [#<User:0x00000004651798 @name="rob", @id="1", @email=nil>]
+```
+
 
 You can also use `first` and `last` to get the first and last user
 ```ruby
