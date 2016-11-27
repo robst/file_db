@@ -1,5 +1,6 @@
 require "csv"
 require "file_db/version"
+require "file_db/system/check"
 require "file_db/configuration"
 require "file_db/database"
 require "file_db/columns"

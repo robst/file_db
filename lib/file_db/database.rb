@@ -4,7 +4,7 @@ module FileDb
     include Singleton
 
     def self.database_check!
-      instance.create_data_directory! unless instance.exist_data_directory?
+      System::Check.run!
     end
 
     def search model
@@ -40,14 +40,6 @@ module FileDb
       write_to_table record.class, :a do
         record
       end
-    end
-
-    def exist_data_directory?
-      File.exist? data_directory
-    end
-
-    def create_data_directory!
-      Dir.mkdir data_directory
     end
 
     private

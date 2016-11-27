@@ -30,11 +30,11 @@ First configure the storage directory:
 ```ruby
 FileDb::Configuration.configure data_directory: 'data'
 ```
-Subdirectory is the default for storing the tables. If you change the configuration, the `database_check!` will be automaticly executed
+Subdirectory is the default for storing the tables. If you change the configuration, the `FileDb` will be automaticly create a new database.
 
 If you running a clean instance with no configuration changes so make sure, the storage directory exists or use the build in check for checking and creating the data directory:
 ```ruby
-FileDb::Database.database_check!
+FileDb::System::Check.run!
 ```
 
 Let's start with creating a model called `User`.
