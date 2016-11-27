@@ -7,7 +7,7 @@ You need to store data into a small type of database, like CSV and want a better
 hm, yeah. just add this to your Gemfile:
 
 ```ruby
-gem 'file_db', '~> 0.6.0'
+gem 'file_db', '~> 0.7.0'
 ```
 
 And then execute:
