@@ -1,5 +1,14 @@
 module FileDb
   module Table
+
+    def database
+      DatabaseManager.instance.database
+    end
+
+    def table
+      database.tables[table_name.to_sym]
+    end
+
     def table_name
       @table_name ||= self.new.class.to_s.gsub(/(.)([A-Z])/,'\1_\2').downcase
     end
