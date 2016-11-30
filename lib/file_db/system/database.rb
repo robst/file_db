@@ -2,6 +2,8 @@ module FileDb
   module System
     class Database
 
+      attr_accessor :tables
+
       def initialize data_directory
         @data_directory = data_directory
         create_database_if_not_exist!
