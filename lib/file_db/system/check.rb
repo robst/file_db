@@ -10,6 +10,8 @@ module FileDb
         create_data_directory!
       end
 
+      private
+
       def exist_data_directory?
         File.exist? data_directory
       end
