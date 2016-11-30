@@ -32,9 +32,9 @@ module FileDb
       private
 
       def cleared_tablename filename
-        filename.gsub! '.csv', ''
-        filename.gsub! @data_directory, ''
-        filename.gsub! '/', ''
+        filename = filename.gsub '.csv', ''
+        filename = filename.gsub @data_directory, ''
+        filename = filename.gsub '/', ''
         filename.to_sym
       end
 
