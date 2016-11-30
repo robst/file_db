@@ -6,11 +6,11 @@ module FileDb
     end
 
     def first
-      new all.first
+      all.first
     end
 
     def last
-      new all.last
+      all.last
     end
 
     def all
