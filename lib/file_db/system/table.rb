@@ -23,11 +23,11 @@ module FileDb
       end
 
       def find id
-        entries_index_by[:id][id.to_s] || raise(RuntimeError, "Element not found id = #{id}")
+        hashed_by_id[id.to_s] || raise(RuntimeError, "Element not found id = #{id}")
       end
 
       def all
-        entries_index_by[:id].values
+        hashed_by_id.values
       end
 
       def where conditions
@@ -38,6 +38,10 @@ module FileDb
           end
         end
         found_elements
+      end
+
+      def hashed_by_id
+        entries_index_by[:id]
       end
 
       private
