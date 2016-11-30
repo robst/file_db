@@ -1,11 +1,10 @@
 module FileDb
   module System
     class Table
-      attr_accessor :entries, :fields
+      attr_accessor :entries_index_by
       def initialize filename, database
         @filename = filename
         @database = database
-        @indexes = [:id, :name]
         @entries_index_by = {}
         @fields = {}
         @fieldnames = {}
@@ -22,6 +21,24 @@ module FileDb
         end
       end
 
+      def find id
+        @entries_index_by[:id][id.to_s] || raise(RuntimeError, "Element not found id = #{id}")
+      end
+
+      def all
+        entries_index_by[:id].values
+      end
+
+      def where conditions
+        found_elements = all
+        conditions.each do |key, value|
+          found_elements = found_elements.select do |entry|
+            entry[key.to_sym].eql?(value.to_s)
+          end
+        end
+        found_elements
+      end
+
       private
 
       def set_fieldnames fieldnames
@@ -36,15 +53,11 @@ module FileDb
         t_entry = {}
         entry.each_with_index do |column, column_index|
           t_entry[@fields[column_index].to_sym] = clear_column_content(column)
-
         end
 
-        @indexes.each do |index|
-          key_name = clear_column_content(entry[@fieldnames[index]])
-          @entries_index_by[index] ||= {}
-          @entries_index_by[index][key_name] = t_entry
-        end
-
+        key_name = clear_column_content(entry[@fieldnames[:id]])
+        @entries_index_by[:id] ||= {}
+        @entries_index_by[:id][key_name.to_s] = t_entry
       end
 
       def clear_column_content column_name
