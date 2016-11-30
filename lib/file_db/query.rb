@@ -1,52 +1,28 @@
 module FileDb
   module Query
-    include FileDb::Columns
-    include FileDb::Table
+
+    def find id
+      new table.find(id)
+    end
+
     def first
-      all.first
+      new all.first
     end
 
     def last
-      all.last
+      new all.last
     end
 
     def all
-      where({})
+      table.all.map{ |entry| new entry }
     end
 
-    def find id
-      find_by(:id, id)
+    def where conditions
+      table.where(conditions).map{ |entry| new entry }
     end
 
     def find_by attribute, search_value
       where("#{attribute}".to_sym => search_value).first
-    end
-
-    def where conditions
-      results = []
-      Database.instance.search(self) do |data_row|
-        if conditions_match?(conditions,data_row)
-          results << create_object(data_row)
-        end
-      end
-      results
-    end
-
-private
-
-    def create_object values
-      hash = {}
-      columns.each do |column|
-        hash[column] = values[column_index(column)]
-      end
-      new hash
-    end
-
-    def conditions_match? conditions, data
-      conditions.each do |key, value|
-        return false unless data[column_index(key)].eql?(value.to_s)
-      end
-     true
     end
 
   end
