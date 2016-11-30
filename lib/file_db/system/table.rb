@@ -6,6 +6,7 @@ module FileDb
         @filename = filename
         @database = database
         @entries_index_by = {}
+        @entries_index_by[:id] = {}
         @fields = {}
         @fieldnames = {}
         read_rows!
@@ -22,7 +23,7 @@ module FileDb
       end
 
       def find id
-        @entries_index_by[:id][id.to_s] || raise(RuntimeError, "Element not found id = #{id}")
+        entries_index_by[:id][id.to_s] || raise(RuntimeError, "Element not found id = #{id}")
       end
 
       def all
@@ -56,7 +57,7 @@ module FileDb
         end
 
         key_name = clear_column_content(entry[@fieldnames[:id]])
-        @entries_index_by[:id] ||= {}
+
         @entries_index_by[:id][key_name.to_s] = t_entry
       end
 
