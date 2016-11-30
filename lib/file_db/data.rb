@@ -5,37 +5,22 @@ module FileDb
     end
 
     def delete
-      Database.instance.delete_record self
+      table.delete(id)
     end
 
     def save
-      if persisted?
-        Database.instance.update_record self
-      else
-        self.id = next_id #Time.now.to_i
-        Database.instance.add_record self
-      end
+      table.update_record self
     end
 
     def persisted?
-      id
+      table.hashed_by_id[id.to_s]
+    end
+
+    def table
+      self.class.table
     end
 
 private
-
-    def next_id
-      return 1 unless current_id
-      current_id + 1
-    end
-
-    def current_id
-      return unless last_record
-      last_record.id.to_i
-    end
-
-    def last_record
-      self.class.last
-    end
 
     def load_params_into_model params
       params.each do |key, value|

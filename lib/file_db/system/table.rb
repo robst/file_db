@@ -44,6 +44,30 @@ module FileDb
         entries_index_by[:id]
       end
 
+      def next_id
+        hashed_by_id.keys.sort.last.to_i + 1
+      end
+
+      def delete id
+        hashed_by_id.delete(id.to_s)
+        # dump
+      end
+
+      def update_record object
+        data_to_save = {}
+        @fieldnames.each_with_index do |column, column_index|
+          field = @fields[column_index]
+          data_to_save[field] = object.send(field)
+        end
+        if object.persisted?
+          @entries_index_by[:id][object.id.to_s] = data_to_save
+        else
+          @entries_index_by[:id][next_id.to_s] = data_to_save
+        end
+
+        # dump
+      end
+
       private
 
       def set_fieldnames fieldnames
