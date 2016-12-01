@@ -1,7 +1,7 @@
 module FileDb
   module System
     class Table
-      attr_accessor :entries_index_by
+      attr_accessor :entries_index_by, :filename
       def initialize filename, database
         @filename = filename
         @database = database
@@ -50,7 +50,7 @@ module FileDb
 
       def delete id
         hashed_by_id.delete(id.to_s)
-        # dump
+        save_records!
       end
 
       def update_record object
@@ -59,13 +59,25 @@ module FileDb
           field = @fields[column_index]
           data_to_save[field] = object.send(field)
         end
-        if object.persisted?
-          @entries_index_by[:id][object.id.to_s] = data_to_save
-        else
-          @entries_index_by[:id][next_id.to_s] = data_to_save
+        unless object.persisted?
+          data_to_save[:id] = next_id
+          object.id = data_to_save[:id]
         end
+        @entries_index_by[:id][object.id.to_s] = data_to_save
+        save_records!
+      end
 
-        # dump
+      def save_records!
+        headline = @fields.keys.map { |field_key| @fields[field_key] }.join(',')
+
+        content = hashed_by_id.map do |index, entry|
+          @fields.keys.map do |identifier|
+            field = @fields[identifier]
+            entry[field.to_sym]
+          end.join(',')
+        end.join("\n")
+
+        @database.save_to_disk self, [headline, content].join("\n")
       end
 
       private
