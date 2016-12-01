@@ -6,6 +6,7 @@ module FileDb
     end
 
     def table
+      database.check_table! table_name.to_sym
       database.tables[table_name.to_sym]
     end
 

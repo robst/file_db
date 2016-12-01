@@ -28,11 +28,16 @@ module FileDb
       end
 
       def drop_data_directory!
-        Dir.delete @data_directory
+        ::FileUtils.rm_rf @data_directory
       end
 
       def save_to_disk table, content
         File.write(table.filename, content)
+      end
+
+      def check_table! table_name
+        return if @tables[table_name]
+        create_table_file! table_name
       end
 
       private
@@ -50,6 +55,10 @@ module FileDb
 
       def create_data_directory!
         Dir.mkdir @data_directory
+      end
+
+      def create_table_file! table_name
+        File.write(File.join(@data_directory, "#{table_name}.csv"), '')
       end
 
     end
