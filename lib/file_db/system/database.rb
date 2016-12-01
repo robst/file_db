@@ -59,6 +59,7 @@ module FileDb
 
       def create_table_file! table_name
         File.write(File.join(@data_directory, "#{table_name}.csv"), '')
+        load_table! File.join(@data_directory, "#{table_name}.csv")
       end
 
     end
