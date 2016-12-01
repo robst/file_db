@@ -15,7 +15,7 @@ module FileDb
       def read_rows!
         File.foreach(@filename).with_index do |row, row_index|
           if row_index == 0
-            set_fieldnames row.split(',')
+            set_fieldnames remove_line_break(row).split(',')
           else
             set_entry row.split(',')
           end
@@ -54,6 +54,7 @@ module FileDb
       end
 
       def update_record object
+        set_fieldnames(object.class.columns) if @fields.empty?
         data_to_save = {}
         @fieldnames.each_with_index do |column, column_index|
           field = @fields[column_index]
@@ -69,7 +70,7 @@ module FileDb
 
       def save_records!
         headline = @fields.keys.map { |field_key| @fields[field_key] }.join(',')
-       
+
         content = hashed_by_id.map do |index, entry|
           @fields.keys.map do |identifier|
             field = @fields[identifier]
@@ -82,9 +83,11 @@ module FileDb
 
       private
 
+
+
       def set_fieldnames fieldnames
         fieldnames.each_with_index do |column, column_index|
-          symbol_column = clear_column_content(column).to_sym
+          symbol_column = remove_line_break(column).to_sym
           @fields[column_index] = symbol_column
           @fieldnames[symbol_column] = column_index
         end
@@ -93,16 +96,16 @@ module FileDb
       def set_entry entry
         t_entry = {}
         entry.each_with_index do |column, column_index|
-          t_entry[@fields[column_index].to_sym] = clear_column_content(column)
+          t_entry[@fields[column_index].to_sym] = remove_line_break(column)
         end
 
-        key_name = clear_column_content(entry[@fieldnames[:id]])
+        key_name = remove_line_break(entry[@fieldnames[:id]])
 
         @entries_index_by[:id][key_name.to_s] = t_entry
       end
 
-      def clear_column_content column_name
-        column_name.gsub "\n", ""
+      def remove_line_break value
+        value.to_s.gsub "\n", ""
       end
 
     end
