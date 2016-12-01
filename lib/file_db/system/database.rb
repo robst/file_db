@@ -28,7 +28,7 @@ module FileDb
       end
 
       def drop_data_directory!
-        Dir.remove @data_directory
+        Dir.delete @data_directory
       end
 
       def save_to_disk table, content
