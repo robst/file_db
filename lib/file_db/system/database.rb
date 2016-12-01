@@ -31,6 +31,10 @@ module FileDb
         Dir.remove @data_directory
       end
 
+      def save_to_disk table, content
+        File.write(table.filename, content)
+      end
+
       private
 
       def cleared_tablename filename
