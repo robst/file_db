@@ -1,3 +1,4 @@
+require 'fileutils'
 require "file_db/version"
 require "file_db/system/check"
 require "file_db/system/database"
