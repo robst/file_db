@@ -2,7 +2,9 @@ module FileDb
   module Query
 
     def find id
-      new table.find(id)
+      found_element = table.find(id)
+      return unless found_element
+      new found_element
     end
 
     def first

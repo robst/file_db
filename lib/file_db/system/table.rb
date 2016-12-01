@@ -23,7 +23,7 @@ module FileDb
       end
 
       def find id
-        hashed_by_id[id.to_s] || raise(RuntimeError, "Element not found id = #{id}")
+        hashed_by_id[id.to_s]
       end
 
       def all
@@ -61,7 +61,7 @@ module FileDb
           data_to_save[field] = object.send(field)
         end
         unless object.persisted?
-          data_to_save[:id] = next_id
+          data_to_save[:id] = next_id.to_s
           object.id = data_to_save[:id]
         end
         @entries_index_by[:id][object.id.to_s] = data_to_save
