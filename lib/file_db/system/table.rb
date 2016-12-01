@@ -45,7 +45,7 @@ module FileDb
       end
 
       def next_id
-        hashed_by_id.keys.sort.last.to_i + 1
+        hashed_by_id.keys.last.to_i + 1
       end
 
       def delete id
@@ -69,7 +69,7 @@ module FileDb
 
       def save_records!
         headline = @fields.keys.map { |field_key| @fields[field_key] }.join(',')
-
+       
         content = hashed_by_id.map do |index, entry|
           @fields.keys.map do |identifier|
             field = @fields[identifier]
