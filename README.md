@@ -1,13 +1,13 @@
 # FileDb
 
-You need to store data into a small type of database, like CSV and want a better way to handle it? So you can use `FileDb` for this. It stores all data for a model into CSV files and create accessor for you.
+FileDb is a small type of database. It stores all data for a model into CSV files and create accessor for you.
 
 ## Installation
 
 hm, yeah. just add this to your Gemfile:
 
 ```ruby
-gem 'file_db', '~> 0.7.0'
+gem 'file_db', '~> 1.0.0'
 ```
 
 And then execute:
@@ -21,6 +21,60 @@ Or install it yourself as:
 
 Huh, ready to use!
 
+## Differences to Version 0.7.0
+
+Fieldnames are now in the first line of the table file.
+
+And:
+
+### Performance
+
+#### 0.7.0 with 1000 Entries
+
+| Action | Time in Milliseconds |
+|---|---|
+|getting the first|29.194|
+|update record|39.226|
+|create record|74.994|
+|using where with 1 parameter|8.700|
+|using where with 2 parameter|9.775|
+|find |9.507|
+
+#### 1.0.0 with 1000 Entries
+
+| Action | Time in Milliseconds |
+|---|---|
+|getting the first|8.184|
+|update record|4.629|
+|create record|3.673|
+|using where with 1 parameter|0.535|
+|using where with 2 parameter|0.337|
+|find |0.030|
+
+#### 0.7.0 with 5000 Entries
+
+| Action | Time in Milliseconds |
+|---|---|
+|getting the first|88.852|
+|update record|122.662|
+|create record|284.086|
+|using where with 1 parameter|35.795|
+|using where with 2 parameter|35.125|
+|find |35.881|
+
+#### 1.0.0 with 5000 Entries
+
+| Action | Time in Milliseconds |
+|---|---|
+|getting the first|27.343|
+|update record|14.405|
+|create record|9.705|
+|using where with 1 parameter|1.846|
+|using where with 2 parameter|2.027|
+|find |0.019|
+
+
+
 ## Usage
 
 ### Configuration
@@ -30,12 +84,8 @@ First configure the storage directory:
 ```ruby
 FileDb::Configuration.configure data_directory: 'data'
 ```
-Subdirectory is the default for storing the tables. If you change the configuration, the `FileDb` will be automaticly create a new database.
+Subdirectory is the default for storing the tables. If you change the configuration, the `FileDb` will be automaticly create a new database directory and table files if needed.
 
-If you running a clean instance with no configuration changes so make sure, the storage directory exists or use the build in check for checking and creating the data directory:
-```ruby
-FileDb::System::Check.run!
-```
 
 Let's start with creating a model called `User`.
 
