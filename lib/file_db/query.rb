@@ -8,11 +8,15 @@ module FileDb
     end
 
     def first
-      all.first
+      found_element = table.first
+      return unless found_element
+      new found_element
     end
 
     def last
-      all.last
+      found_element = table.last
+      return unless found_element
+      new found_element
     end
 
     def all

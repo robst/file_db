@@ -5,6 +5,7 @@ module FileDb
       def initialize filename, database
         @filename = filename
         @database = database
+        @specific_records = {}
         @entries_index_by = {}
         @entries_index_by[:id] = {}
         @fields = {}
@@ -28,6 +29,14 @@ module FileDb
 
       def all
         hashed_by_id.values
+      end
+
+      def first
+        hashed_by_id[@specific_records[:first]]
+      end
+
+      def last
+        hashed_by_id[@specific_records[:last]]
       end
 
       def where conditions
@@ -102,6 +111,8 @@ module FileDb
         key_name = remove_line_break(entry[@fieldnames[:id]])
 
         @entries_index_by[:id][key_name.to_s] = t_entry
+        @specific_records[:first_id] ||= key_name.to_s
+        @specific_records[:last_id] = key_name.to_s
       end
 
       def remove_line_break value
