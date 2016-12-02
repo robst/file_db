@@ -32,11 +32,11 @@ module FileDb
       end
 
       def first
-        hashed_by_id[@specific_records[:first]]
+        hashed_by_id[@specific_records[:first_id]]
       end
 
       def last
-        hashed_by_id[@specific_records[:last]]
+        hashed_by_id[@specific_records[:last_id]]
       end
 
       def where conditions
@@ -74,6 +74,7 @@ module FileDb
           object.id = data_to_save[:id]
         end
         @entries_index_by[:id][object.id.to_s] = data_to_save
+        set_specific_index object.id
         save_records!
       end
 
@@ -111,8 +112,15 @@ module FileDb
         key_name = remove_line_break(entry[@fieldnames[:id]])
 
         @entries_index_by[:id][key_name.to_s] = t_entry
-        @specific_records[:first_id] ||= key_name.to_s
-        @specific_records[:last_id] = key_name.to_s
+        set_specific_index key_name
+      end
+
+      def set_specific_index id
+        @specific_records[:first_id] ||= id.to_s
+        @specific_records[:last_id] ||= id.to_s
+        if @specific_records[:last_id].to_i < id.to_i
+          @specific_records[:last_id] = id.to_s
+        end
       end
 
       def remove_line_break value
