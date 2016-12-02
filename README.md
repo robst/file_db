@@ -7,7 +7,7 @@ FileDb is a small type of database. It stores all data for a model into CSV file
 hm, yeah. just add this to your Gemfile:
 
 ```ruby
-gem 'file_db', '~> 1.0.0'
+gem 'file_db', '~> 1.1.0'
 ```
 
 And then execute:
