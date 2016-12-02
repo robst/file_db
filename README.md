@@ -44,7 +44,7 @@ And:
 
 | Action | Time in Milliseconds |
 |---|---|
-|getting the first|8.184|
+|getting the first|0.031|
 |update record|4.629|
 |create record|3.673|
 |using where with 1 parameter|0.535|
@@ -66,7 +66,7 @@ And:
 
 | Action | Time in Milliseconds |
 |---|---|
-|getting the first|27.343|
+|getting the first|0.037|
 |update record|14.405|
 |create record|9.705|
 |using where with 1 parameter|1.846|
