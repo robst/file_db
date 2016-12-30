@@ -21,59 +21,42 @@ Or install it yourself as:
 
 Huh, ready to use!
 
-## Differences to Version 0.7.0
-
-Fieldnames are now in the first line of the table file.
-
-And:
-
 ### Performance
 
-#### 0.7.0 with 1000 Entries
-
-| Action | Time in Milliseconds |
-|---|---|
-|getting the first|29.194|
-|update record|39.226|
-|create record|74.994|
-|using where with 1 parameter|8.700|
-|using where with 2 parameter|9.775|
-|find |9.507|
-
-#### 1.0.0 with 1000 Entries
+#### with 1.000 Entries
 
 | Action | Time in Milliseconds |
 |---|---|
 |getting the first|0.031|
-|update record|4.629|
-|create record|3.673|
+|update record|3.262|
+|create record|2.712|
 |using where with 1 parameter|0.535|
 |using where with 2 parameter|0.337|
 |find |0.030|
 
-#### 0.7.0 with 5000 Entries
-
-| Action | Time in Milliseconds |
-|---|---|
-|getting the first|88.852|
-|update record|122.662|
-|create record|284.086|
-|using where with 1 parameter|35.795|
-|using where with 2 parameter|35.125|
-|find |35.881|
-
-#### 1.0.0 with 5000 Entries
+#### with 5.000 Entries
 
 | Action | Time in Milliseconds |
 |---|---|
 |getting the first|0.037|
-|update record|14.405|
-|create record|9.705|
+|update record|10.814|
+|create record|12.683|
 |using where with 1 parameter|1.846|
 |using where with 2 parameter|2.027|
 |find |0.019|
 
+#### with 10.000 Entries
 
+| Action | Time in Milliseconds |
+|---|---|
+|getting the first|0.045|
+|update record|34.187|
+|create record|21.203|
+|using where with 1 parameter|4.264|
+|using where with 2 parameter|5.076|
+|find |0.053|
+
+Please look at the [wiki](https://github.com/robst/file_db/wiki)
 
 ## Usage
 
