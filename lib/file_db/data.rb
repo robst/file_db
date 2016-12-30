@@ -24,7 +24,7 @@ private
 
     def load_params_into_model params
       params.each do |key, value|
-        next unless self.class.columns.include?(key)
+        next unless self.class.columns_hash[key.to_sym]
         send("#{key}=", value)
       end
     end
