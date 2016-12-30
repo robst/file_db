@@ -6,14 +6,16 @@ module FileDb
       names.delete(:id)
       @columns = [:id] + names
 
+      @columns_hash = {}
       @columns.each do |name|
+        @columns_hash[name] = true
         define_method name do
           instance_variable_get "@#{name}"
-        end 
+        end
         define_method "#{name}=" do |new_val|
           instance_variable_set "@#{name}", new_val
         end
-      end 
+      end
 
     end
 
@@ -21,5 +23,8 @@ module FileDb
       @columns.index column
     end
 
+    def columns_hash
+      @columns_hash
+    end
   end
 end
