@@ -8,6 +8,8 @@ require "file_db/columns"
 require "file_db/table"
 require "file_db/data"
 require "file_db/query"
+require "file_db/filter"
+
 require "file_db/model"
 
 module FileDb
