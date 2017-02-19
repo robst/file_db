@@ -7,7 +7,7 @@ FileDb is a small type of database. It stores all data for a model into CSV file
 hm, yeah. just add this to your Gemfile:
 
 ```ruby
-gem 'file_db', '~> 1.1.0'
+gem 'file_db', '~> 1.2.0'
 ```
 
 And then execute:
@@ -187,6 +187,28 @@ user.delete
 User.find(1)
 -> nil
 ```
+
+It's also possible to set before and after hooks
+
+```ruby
+class User < FileDb::Model
+  columns :name, :rand
+  before :save { |user|
+    user.name = 'another username'
+    puts "username changed"
+  }
+
+  after :save {
+    puts "updated"
+  }
+end
+```
+
+You can use the following filter actions (for before and after):
+
+* :save
+* :delete
+* :initialize
 
 
 You want to use another table than `user`? So just configure it:
