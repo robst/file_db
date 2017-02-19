@@ -40,10 +40,14 @@ module FileDb
       private
 
       def run_filters runtime, type
-        return unless self.class.file_db_filters[runtime.to_sym]
-        self.class.file_db_filters[runtime.to_sym][type.to_sym].each do |filter|
+        return unless file_db_filters(runtime)
+        file_db_filters(runtime)[type.to_sym].each do |filter|
           filter.call(self)
         end
+      end
+
+      def file_db_filters runtime
+        self.class.file_db_filters && self.class.file_db_filters[runtime.to_sym]
       end
 
     end
