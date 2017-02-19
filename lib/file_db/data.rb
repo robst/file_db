@@ -1,15 +1,21 @@
 module FileDb
   module Data
     def initialize params= {}
+      before :initialize
       load_params_into_model params
+      after :initialize
     end
 
     def delete
+      before :delete
       table.delete(id)
+      after :delete
     end
 
     def save
+      before :save
       table.update_record self
+      after :save
     end
 
     def persisted?
