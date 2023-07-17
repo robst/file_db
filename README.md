@@ -1,3 +1,7 @@
+# read only
+
+This repository is archived and read only
+
 # FileDb
 
 FileDb is a small type of database. It stores all data for a model into CSV files and create accessor for you.
